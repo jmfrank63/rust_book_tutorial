@@ -1,9 +1,11 @@
 use std::io;
 
 fn main() {
-    let mut guess = String::new();
+    println!("Guess the number!");
 
-    println!("Please enter a guess for a number between 1 and 100:");
+    println!("Please input your guess");
+
+    let mut guess = String::new();
 
     io::stdin().read_line(&mut guess)
         .expect("Failed to read line");
