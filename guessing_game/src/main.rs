@@ -23,7 +23,7 @@ fn main() {
             Err(_) => {
                 println!("Please enter a number!");
                 continue;
-            }
+            },
         };
 
         println!("You guessed: {}", guess);
