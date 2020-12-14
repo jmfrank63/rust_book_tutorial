@@ -6,8 +6,10 @@ use std::io::Write;
 use std::str::FromStr;
 
 fn main() {
+    let unit = input_parse::<String>("Please enter the unit to convert from (C or F): ").expect("Unit not found");
     let temperature = input_parse_retry::<f32>("Please enter a temperature: ", "Please try again.");
     println!("The temperature you entered was {}", temperature);
+    println!("The unit you entered was {}", unit);
 }
 
 pub fn input(prompt: &str) -> Result<String, Box<dyn Error>> {
