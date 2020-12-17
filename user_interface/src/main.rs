@@ -23,17 +23,20 @@ fn main() {
             }
         };
         println!("{:?}", command);
+        hmap.insert(command[3],command[1] );
     }
+    println!("{:?}", hmap);
 }
 
 fn parse_input(input: &str) -> Result<[&str; 4]> {
     let words: Vec<&str> = input.split(' ').collect();
     match words.try_into(){
-        Ok(mut arr) => {
-            for (count, element) in arr.iter().enumerate() {
-                println!("{}{}", count, element);
+        Ok(arr) => {
+            let a: [&str; 4] = arr;
+            for (c, e) in a.iter().enumerate() {
+                println!("{}: {}",c, e);
             }
-            Ok(arr)
+            Ok(a)
         },
         Err(v) => {
             let error = format!("Expected 4 but found {} arguments!", v.len());
