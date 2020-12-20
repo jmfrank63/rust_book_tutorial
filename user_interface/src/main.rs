@@ -41,9 +41,9 @@ fn get_command(prompt: &str) -> Result<Vec<&str>> {
 }
 
 fn do_command<'s, 'v>(
-    hmap: &mut HashMap<&'s str, &'v Vec<&'s str>>,
-    departments: &'v mut Vec<&'s str>,
-    employees: &'v mut Vec<&'s str>,
+    hmap: &mut HashMap<&'s str, &Vec<&'s str>>,
+    departments: &mut Vec<&'s str>,
+    employees: &mut Vec<&'s str>,
     command: &'v Vec<&'s str>,
 ) {
     let employee = command[1];
@@ -57,7 +57,10 @@ fn do_command<'s, 'v>(
                 add_employee_to_employees(employees, employee);
             } else {
                 add_department_to_departments(departments, department);
-                add_employee_to_employees(employees, employee);
+                employees = match add_employee_to_employees(employees, employee) {
+                    Some(_) => employees,
+                    None => None,
+                };
                 hmap.insert(department, employees);
             }
         }
@@ -74,10 +77,13 @@ fn do_command<'s, 'v>(
     };
 }
 
-fn add_employee_to_employees<'s>(employees: &mut Vec<&'s str>, employee: &'s str) {
+fn add_employee_to_employees<'s, 'v>(employees: &'v mut Vec<&'s str>, employee: &'s str) -> Option<&'v mut Vec<&'s str>> {
     match employees.iter().find(|e| *e == &employee) {
-        Some(_) => {},
-        None => employees.push(employee),
+        Some(_) => Some(employees),
+        None => {
+            employees.push(employee);
+            None
+        },
     }
 }
 
